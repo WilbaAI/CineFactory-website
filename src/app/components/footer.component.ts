@@ -35,10 +35,28 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         <div>
           <h5>Get in touch</h5>
           <ul>
-            <li><a href="mailto:hello@thecinefactory.com">hello&#64;thecinefactory.com</a></li>
-            <li><a href="https://tiktok.com" target="_blank" rel="noreferrer">TikTok</a></li>
-            <li><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a></li>
-            <li><a href="#">Colombo, Sri Lanka</a></li>
+            <li><a href="tel:+94705989898">+94 70 5 98 98 98</a></li>
+            <li>
+              <a href="mailto:thecinefactory.tfc@gmail.com">thecinefactory.tfc&#64;gmail.com</a>
+            </li>
+            <li>
+              <a href="https://www.tiktok.com/@the.cinefactory" target="_blank" rel="noreferrer"
+                >TikTok</a
+              >
+            </li>
+            <li>
+              <a href="https://www.instagram.com/the.cine.factory/" target="_blank" rel="noreferrer"
+                >Instagram</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://maps.google.com/?q=No 6, Deepangoda, Homagama"
+                target="_blank"
+                rel="noreferrer"
+                >No 6, Deepangoda, Homagama</a
+              >
+            </li>
           </ul>
         </div>
       </div>

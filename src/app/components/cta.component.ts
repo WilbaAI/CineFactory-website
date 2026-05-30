@@ -32,8 +32,8 @@ import { RevealDirective } from '../reveal.directive';
               <path d="M5 12h14M13 5l7 7-7 7" />
             </svg>
           </button>
-          <a href="mailto:hello@thecinefactory.com" class="tcf-btn tcf-btn--ghost">
-            hello&#64;thecinefactory.com
+          <a href="mailto:thecinefactory.tfc@gmail.com" class="tcf-btn tcf-btn--ghost">
+            thecinefactory.tfc&#64;gmail.com
           </a>
         </div>
       </div>
