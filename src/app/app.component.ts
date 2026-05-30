@@ -7,7 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HeaderComponent } from './components/header.component';
 import { HeroComponent } from './components/hero.component';
@@ -20,10 +20,8 @@ import { FooterComponent } from './components/footer.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     HeaderComponent,
     HeroComponent,
     MarqueeComponent,

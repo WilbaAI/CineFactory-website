@@ -15,7 +15,6 @@ const TAIL = 'Brand';
 
 @Component({
   selector: 'tcf-hero',
-  standalone: true,
   imports: [EmberFieldComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

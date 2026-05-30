@@ -3,7 +3,6 @@ import { RevealDirective } from '../reveal.directive';
 
 @Component({
   selector: 'tcf-cta',
-  standalone: true,
   imports: [RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

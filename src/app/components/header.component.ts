@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 interface NavLink {
   id: string;
@@ -8,8 +7,7 @@ interface NavLink {
 
 @Component({
   selector: 'tcf-header',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <header class="tcf-nav">

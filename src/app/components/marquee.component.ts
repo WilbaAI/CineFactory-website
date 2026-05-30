@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'tcf-marquee',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="tcf-marquee">

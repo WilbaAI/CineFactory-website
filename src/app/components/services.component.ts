@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RevealDirective } from '../reveal.directive';
 
 interface Service {
@@ -10,8 +10,7 @@ interface Service {
 
 @Component({
   selector: 'tcf-services',
-  standalone: true,
-  imports: [CommonModule, RevealDirective],
+  imports: [RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="tcf-section" id="services">

@@ -8,7 +8,7 @@ import {
   Output,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RevealDirective } from '../reveal.directive';
 
 export interface Work {
@@ -34,8 +34,7 @@ interface WorkGroup {
 
 @Component({
   selector: 'tcf-works',
-  standalone: true,
-  imports: [CommonModule, RevealDirective],
+  imports: [RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="tcf-section" id="work">
