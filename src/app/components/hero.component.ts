@@ -25,12 +25,13 @@ const TAIL = 'Brand';
       <div class="tcf-hero__vignette"></div>
       <tcf-ember-field></tcf-ember-field>
       <div class="tcf-hero__content">
-        <span class="tcf-pill">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2l2.4 7.2L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" />
-          </svg>
-          CineFactory
-        </span>
+        <img
+          class="tcf-hero__mark"
+          src="assets/mark.png"
+          alt="The Cine Factory"
+          width="72"
+          height="72"
+        />
         <h1 class="tcf-hero__title" aria-label="Ignite Your Brand">
           <span aria-hidden="true"
             >{{ head() }}<span class="tcf-hero__accent">{{ tail() }}</span

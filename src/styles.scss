@@ -38,26 +38,6 @@ button {
   border-radius: 4px;
 }
 
-/* ---------- RED PILL BADGE ("✦ CineFactory" / "4 services") ---------- */
-.tcf-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--tint-ember-30);
-  background: var(--tint-ember-12);
-  color: var(--ember-300);
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-}
-.tcf-pill svg {
-  color: var(--ember-400);
-}
-
 /* ---------- RED INLINE LINK ("View Services →") ---------- */
 .tcf-link {
   display: inline-flex;
@@ -237,6 +217,12 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.tcf-hero__mark {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 28px;
+  filter: drop-shadow(0 8px 28px rgba(229, 52, 42, 0.35));
 }
 .tcf-hero__title {
   font-family: var(--font-display);

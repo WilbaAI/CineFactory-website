@@ -47,7 +47,7 @@ import { RevealDirective } from '../reveal.directive';
             <div class="tcf-eyebrow-tag">Where we're going</div>
             <h2 class="tcf-section__title">Our Vision</h2>
             <p>
-              To become a leading creative force in digital media — known for innovation,
+              To become a leading creative force in digital media - known for innovation,
               storytelling, and results.
             </p>
           </div>

@@ -54,7 +54,7 @@ export class ServicesComponent {
     {
       num: '01',
       title: 'AI Video Content',
-      desc: 'Next-generation AI-powered videos for modern brands. Cinematic, realistic, emotionally engaging — never generic.',
+      desc: 'Next-generation AI-powered videos for modern brands. Cinematic, realistic, emotionally engaging - never generic.',
     },
     {
       num: '02',

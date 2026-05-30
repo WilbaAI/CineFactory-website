@@ -39,3 +39,6 @@ Thumbs.db
 
 # Local agent / editor config
 .claude/
+
+# Vercel
+.vercel
