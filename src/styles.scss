@@ -467,74 +467,120 @@ button {
   transform: translate(3px, -3px);
 }
 
-/* ---------- WORKS / CASE STUDIES ---------- */
-.tcf-works-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+/* ---------- WORKS / PORTFOLIO RAILS ---------- */
+.tcf-works-rail {
+  margin-top: 44px;
 }
-.tcf-work {
+.tcf-works-rail__label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--smoke-200);
+  margin: 0 0 14px;
+  text-align: center; /* matches centered cards */
+}
+.tcf-works-rail.has-overflow .tcf-works-rail__label {
+  text-align: left; /* overflowing rails are left-aligned + scroll */
+}
+.tcf-works-rail__scroller {
   position: relative;
+}
+.tcf-works-track {
+  display: flex;
+  gap: 14px;
+  justify-content: safe center; /* center when the row fits, start-align when it overflows */
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.tcf-works-track::-webkit-scrollbar {
+  display: none;
+}
+.tcf-reel {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(148px, 42vw, 186px);
   aspect-ratio: 9 / 16;
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border-hairline);
+  background: var(--bg-surface);
   cursor: pointer;
   isolation: isolate;
   padding: 0;
   text-align: left;
-  background: var(--bg-surface);
-  transition: border-color var(--duration-medium) var(--ease-cinematic);
+  scroll-snap-align: start;
+  transition:
+    border-color var(--duration-medium) var(--ease-cinematic),
+    transform var(--duration-medium) var(--ease-cinematic);
 }
-.tcf-work:hover {
+.tcf-reel:hover {
   border-color: var(--tint-ember-50);
+  transform: translateY(-3px);
 }
-.tcf-work__bg {
+.tcf-reel__bg {
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
   transition: transform 800ms var(--ease-cinematic);
 }
-.tcf-work:hover .tcf-work__bg {
+.tcf-reel:hover .tcf-reel__bg {
   transform: scale(1.06);
 }
-.tcf-work::after {
+.tcf-reel__bg.is-placeholder {
+  background:
+    radial-gradient(circle at 50% 32%, rgba(229, 52, 42, 0.22), rgba(0, 0, 0, 0) 62%),
+    linear-gradient(160deg, var(--ink-700), var(--ink-900));
+}
+.tcf-reel__bg.is-placeholder::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.88) 100%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='52' height='52' fill='none' stroke='%23ffffff' stroke-width='1.1'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M10 8.4l6 3.6-6 3.6z' fill='%23ffffff' stroke='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center 38%;
+  opacity: 0.14;
+}
+.tcf-reel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.9) 100%);
   z-index: 1;
   pointer-events: none;
 }
-.tcf-work__meta {
+.tcf-reel__meta {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 2;
-  padding: 20px;
+  padding: 14px;
 }
-.tcf-work__client {
+.tcf-reel__client {
   display: block;
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ember-300);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
-.tcf-work__title {
+.tcf-reel__title {
   display: block;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 19px;
+  font-size: 15px;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--white);
 }
-.tcf-work__play {
+.tcf-reel__play {
   position: absolute;
   inset: 0;
   z-index: 2;
@@ -543,18 +589,58 @@ button {
   opacity: 0;
   transition: opacity var(--duration-medium) var(--ease-cinematic);
 }
-.tcf-work:hover .tcf-work__play,
-.tcf-work:focus-visible .tcf-work__play {
+.tcf-reel:hover .tcf-reel__play,
+.tcf-reel:focus-visible .tcf-reel__play {
   opacity: 1;
 }
-.tcf-work__play-icon {
-  width: 60px;
-  height: 60px;
+.tcf-reel__play-icon {
+  width: 48px;
+  height: 48px;
   border-radius: var(--radius-pill);
   background: var(--ember-500);
   display: grid;
   place-items: center;
-  box-shadow: 0 0 32px rgba(229, 52, 42, 0.5);
+  box-shadow: 0 0 28px rgba(229, 52, 42, 0.5);
+}
+.tcf-rail-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--white);
+  background: rgba(6, 5, 5, 0.72);
+  border: 1px solid var(--border-soft);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-fast) var(--ease-cinematic),
+    background var(--duration-fast) var(--ease-cinematic);
+}
+.tcf-works-rail.has-overflow .tcf-works-rail__scroller:hover .tcf-rail-arrow {
+  opacity: 1;
+  pointer-events: auto;
+}
+.tcf-rail-arrow:hover {
+  background: var(--ember-500);
+  border-color: var(--ember-500);
+}
+.tcf-rail-arrow--prev {
+  left: -10px;
+}
+.tcf-rail-arrow--next {
+  right: -10px;
+}
+@media (hover: none) {
+  .tcf-rail-arrow {
+    display: none;
+  }
 }
 
 /* ---------- CTA BANNER ---------- */
@@ -723,9 +809,6 @@ button {
   }
   .tcf-services {
     grid-template-columns: 1fr;
-  }
-  .tcf-works-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
   .tcf-section {
     padding: 80px 20px;

@@ -1,12 +1,25 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  Output,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RevealDirective } from '../reveal.directive';
 
 export interface Work {
-  id: string;
   client: string;
   title: string;
-  bg: string;
+  image?: string;
+}
+
+interface WorkGroup {
+  client: string;
+  items: { title: string; image?: string }[];
 }
 
 @Component({
@@ -22,61 +35,167 @@ export interface Work {
           <h2 class="tcf-section__title">Our Work</h2>
         </div>
 
-        <div class="tcf-works-grid">
-          @for (w of works; track w.id) {
-            <button
-              type="button"
-              class="tcf-work"
-              [tcfReveal]="$index"
-              (click)="selectWork.emit(w)"
-              [attr.aria-label]="'View case study: ' + w.title + ' for ' + w.client"
-            >
-              <span class="tcf-work__bg" [style.background]="w.bg"></span>
-              <span class="tcf-work__play">
-                <span class="tcf-work__play-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </span>
-              <span class="tcf-work__meta">
-                <span class="tcf-work__client">{{ w.client }}</span>
-                <span class="tcf-work__title">{{ w.title }}</span>
-              </span>
-            </button>
-          }
-        </div>
+        @for (group of groups; track group.client) {
+          <div class="tcf-works-rail" [tcfReveal]="0">
+            <h3 class="tcf-works-rail__label">{{ group.client }}</h3>
+            <div class="tcf-works-rail__scroller">
+              <button
+                type="button"
+                class="tcf-rail-arrow tcf-rail-arrow--prev"
+                aria-label="Scroll left"
+                (click)="scrollRail($event, -1)"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+
+              <div class="tcf-works-track">
+                @for (item of group.items; track item.title) {
+                  <button
+                    type="button"
+                    class="tcf-reel"
+                    (click)="selectWork.emit({ client: group.client, title: item.title })"
+                    [attr.aria-label]="'View ' + item.title + ' for ' + group.client"
+                  >
+                    <span
+                      class="tcf-reel__bg"
+                      [class.is-placeholder]="!item.image"
+                      [style.background-image]="item.image ? 'url(' + item.image + ')' : null"
+                    ></span>
+                    <span class="tcf-reel__play">
+                      <span class="tcf-reel__play-icon">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="white"
+                          aria-hidden="true"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="tcf-reel__meta">
+                      <span class="tcf-reel__client">{{ group.client }}</span>
+                      <span class="tcf-reel__title">{{ item.title }}</span>
+                    </span>
+                  </button>
+                }
+              </div>
+
+              <button
+                type="button"
+                class="tcf-rail-arrow tcf-rail-arrow--next"
+                aria-label="Scroll right"
+                (click)="scrollRail($event, 1)"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M9 6l6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        }
       </div>
     </section>
   `,
 })
-export class WorksComponent {
+export class WorksComponent implements AfterViewInit, OnDestroy {
   @Output() selectWork = new EventEmitter<Work>();
 
-  readonly works: Work[] = [
+  private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
+
+  ngAfterViewInit(): void {
+    this.updateOverflow();
+    window.addEventListener('resize', this.updateOverflow, { passive: true });
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.updateOverflow);
+  }
+
+  // Mark only the rails that overflow so arrows show just where they're useful.
+  private readonly updateOverflow = (): void => {
+    const rails = this.host.nativeElement.querySelectorAll<HTMLElement>('.tcf-works-rail');
+    rails.forEach((rail) => {
+      const track = rail.querySelector<HTMLElement>('.tcf-works-track');
+      if (track) rail.classList.toggle('has-overflow', track.scrollWidth > track.clientWidth + 4);
+    });
+  };
+
+  // Real portfolio. Drop reel thumbnails into src/assets/works/<client>/ and set
+  // `image` on each item to swap the placeholder for the actual frame.
+  readonly groups: WorkGroup[] = [
     {
-      id: 'avatar',
-      client: 'Avatar Band SL',
-      title: 'Bus campaign',
-      bg: "url('assets/portfolio/08-works.webp') -120px -380px / 600px auto no-repeat",
+      client: 'Avatar Band SL — Bus',
+      items: [
+        { title: 'Avatar movie theme bus' },
+        { title: 'The transformation' },
+        { title: 'Music band bus' },
+      ],
     },
     {
-      id: 'wijaya',
-      client: 'Wijaya Products',
-      title: 'Biriyaani mix launch',
-      bg: "url('assets/portfolio/08-works.webp') -120px -900px / 600px auto no-repeat",
+      client: 'Edirisinghe Cushion Works',
+      items: [
+        { title: 'Interior modification' },
+        { title: 'Next-level seats' },
+        { title: 'Best-in-class finish' },
+      ],
     },
     {
-      id: 'wijaya-map',
-      client: 'Wijaya Products',
-      title: 'Origins map sequence',
-      bg: "url('assets/portfolio/08-works.webp') -560px -900px / 600px auto no-repeat",
+      client: 'Heshan de Silva — Personal Content',
+      items: [
+        { title: 'Trust your work' },
+        { title: 'Heshan de Silva' },
+        { title: 'Hear this out' },
+      ],
     },
     {
-      id: 'anura',
       client: 'Anura Advertising',
-      title: 'New Year wish',
-      bg: "url('assets/portfolio/08-works.webp') -440px -1430px / 700px auto no-repeat",
+      items: [
+        { title: 'Sakeed — Reflect' },
+        { title: 'Tiger bus wrap' },
+        { title: 'NR Super Service' },
+      ],
+    },
+    {
+      client: 'Imperial College',
+      items: [
+        { title: 'Imperial College' },
+        { title: 'Sustainable businesses' },
+        { title: 'International Business & Finance' },
+        { title: 'Build my future' },
+        { title: 'One of the best decisions' },
+        { title: 'Morning & night practices' },
+      ],
     },
   ];
+
+  scrollRail(event: Event, direction: number): void {
+    const scroller = (event.currentTarget as HTMLElement).closest('.tcf-works-rail__scroller');
+    const track = scroller?.querySelector<HTMLElement>('.tcf-works-track');
+    if (!track) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.scrollBy({
+      left: direction * track.clientWidth * 0.8,
+      behavior: reduce ? 'auto' : 'smooth',
+    });
+  }
 }
