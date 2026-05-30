@@ -1,11 +1,10 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  NgZone,
   OnDestroy,
   ViewChild,
+  afterNextRender,
   inject,
 } from '@angular/core';
 
@@ -48,11 +47,10 @@ interface Particle {
     `,
   ],
 })
-export class EmberFieldComponent implements AfterViewInit, OnDestroy {
+export class EmberFieldComponent implements OnDestroy {
   @ViewChild('canvas', { static: true })
   private readonly canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  private readonly zone = inject(NgZone);
   private readonly host = inject(ElementRef<HTMLElement>);
 
   private ctx!: CanvasRenderingContext2D;
@@ -66,16 +64,17 @@ export class EmberFieldComponent implements AfterViewInit, OnDestroy {
   private onScreen = true;
   private reduced = false;
 
-  ngAfterViewInit(): void {
-    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const canvas = this.canvasRef.nativeElement;
-    const ctx = canvas.getContext('2d', { alpha: true });
-    if (!ctx) return;
-    this.ctx = ctx;
-    this.resize();
-    this.seed();
+  constructor() {
+    // Browser-only (zoneless: no NgZone needed; rAF/listeners don't trigger CD).
+    afterNextRender(() => {
+      this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const canvas = this.canvasRef.nativeElement;
+      const ctx = canvas.getContext('2d', { alpha: true });
+      if (!ctx) return;
+      this.ctx = ctx;
+      this.resize();
+      this.seed();
 
-    this.zone.runOutsideAngular(() => {
       window.addEventListener('resize', this.onResize, { passive: true });
       window.addEventListener('pointermove', this.onPointerMove, { passive: true });
       window.addEventListener('pointerout', this.onPointerOut, { passive: true });

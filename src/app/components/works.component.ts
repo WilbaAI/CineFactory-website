@@ -1,11 +1,11 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
   OnDestroy,
   Output,
+  afterNextRender,
   inject,
 } from '@angular/core';
 
@@ -135,14 +135,17 @@ interface WorkGroup {
     </section>
   `,
 })
-export class WorksComponent implements AfterViewInit, OnDestroy {
+export class WorksComponent implements OnDestroy {
   @Output() selectWork = new EventEmitter<Work>();
 
   private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
 
-  ngAfterViewInit(): void {
-    this.updateOverflow();
-    window.addEventListener('resize', this.updateOverflow, { passive: true });
+  constructor() {
+    // Browser-only: arrows depend on measured overflow (no DOM during prerender).
+    afterNextRender(() => {
+      this.updateOverflow();
+      window.addEventListener('resize', this.updateOverflow, { passive: true });
+    });
   }
 
   ngOnDestroy(): void {

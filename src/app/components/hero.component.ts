@@ -1,10 +1,10 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   OnDestroy,
   Output,
+  afterNextRender,
   computed,
   signal,
 } from '@angular/core';
@@ -12,6 +12,7 @@ import { EmberFieldComponent } from './ember-field.component';
 
 const HEAD = 'Ignite Your ';
 const TAIL = 'Brand';
+const FULL = HEAD + TAIL;
 
 @Component({
   selector: 'tcf-hero',
@@ -75,30 +76,31 @@ const TAIL = 'Brand';
     </section>
   `,
 })
-export class HeroComponent implements AfterViewInit, OnDestroy {
+export class HeroComponent implements OnDestroy {
   @Output() primary = new EventEmitter<void>();
   @Output() secondary = new EventEmitter<void>();
   @Output() scrollDown = new EventEmitter<void>();
 
-  private readonly full = HEAD + TAIL;
-  private readonly typed = signal(0);
+  // Starts full so prerender/no-JS render the complete headline (SEO); the
+  // browser resets to 0 and types it out after hydration.
+  private readonly typed = signal(FULL.length);
   private timer?: ReturnType<typeof setTimeout>;
 
   readonly head = computed(() => HEAD.slice(0, Math.min(this.typed(), HEAD.length)));
   readonly tail = computed(() => TAIL.slice(0, Math.max(0, this.typed() - HEAD.length)));
 
-  ngAfterViewInit(): void {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.typed.set(this.full.length);
-      return;
-    }
-    const step = (): void => {
-      if (this.typed() >= this.full.length) return;
-      this.typed.update((n) => n + 1);
-      const justTyped = this.full[this.typed() - 1];
-      this.timer = setTimeout(step, justTyped === ' ' ? 120 : 70 + Math.random() * 50);
-    };
-    this.timer = setTimeout(step, 450);
+  constructor() {
+    afterNextRender(() => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // keep full text
+      this.typed.set(0);
+      const step = (): void => {
+        if (this.typed() >= FULL.length) return;
+        this.typed.update((n) => n + 1);
+        const justTyped = FULL[this.typed() - 1];
+        this.timer = setTimeout(step, justTyped === ' ' ? 120 : 70 + Math.random() * 50);
+      };
+      this.timer = setTimeout(step, 450);
+    });
   }
 
   ngOnDestroy(): void {

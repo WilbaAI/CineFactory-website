@@ -1,9 +1,9 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   HostListener,
   OnDestroy,
+  afterNextRender,
   inject,
   signal,
 } from '@angular/core';
@@ -157,7 +157,7 @@ import { FooterComponent } from './components/footer.component';
     `,
   ],
 })
-export class AppComponent implements AfterViewInit, OnDestroy {
+export class AppComponent implements OnDestroy {
   active = signal<string>('home');
   modalWork = signal<Work | null>(null);
   embedUrl = signal<SafeResourceUrl | null>(null);
@@ -167,22 +167,25 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private observer?: IntersectionObserver;
   private lastFocused: HTMLElement | null = null;
 
-  ngAfterViewInit(): void {
-    // Active-section tracking via IntersectionObserver (no per-frame scroll work).
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            this.active.set(entry.target.id);
+  constructor() {
+    // Browser-only: skipped during prerender (no DOM on the server).
+    afterNextRender(() => {
+      // Active-section tracking via IntersectionObserver (no per-frame scroll work).
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              this.active.set(entry.target.id);
+            }
           }
-        }
-      },
-      { rootMargin: '-45% 0px -55% 0px', threshold: 0 },
-    );
-    for (const id of this.sections) {
-      const el = document.getElementById(id);
-      if (el) this.observer.observe(el);
-    }
+        },
+        { rootMargin: '-45% 0px -55% 0px', threshold: 0 },
+      );
+      for (const id of this.sections) {
+        const el = document.getElementById(id);
+        if (el) this.observer.observe(el);
+      }
+    });
   }
 
   ngOnDestroy(): void {
