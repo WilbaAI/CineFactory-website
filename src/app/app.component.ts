@@ -15,6 +15,7 @@ import { MarqueeComponent } from './components/marquee.component';
 import { MissionVisionComponent } from './components/mission-vision.component';
 import { ServicesComponent } from './components/services.component';
 import { WorksComponent, Work } from './components/works.component';
+import { FaqComponent } from './components/faq.component';
 import { CtaComponent } from './components/cta.component';
 import { FooterComponent } from './components/footer.component';
 
@@ -28,6 +29,7 @@ import { FooterComponent } from './components/footer.component';
     MissionVisionComponent,
     ServicesComponent,
     WorksComponent,
+    FaqComponent,
     CtaComponent,
     FooterComponent,
   ],
@@ -42,6 +44,7 @@ import { FooterComponent } from './components/footer.component';
     <tcf-mission-vision></tcf-mission-vision>
     <tcf-services></tcf-services>
     <tcf-works (selectWork)="openModal($event)"></tcf-works>
+    <tcf-faq></tcf-faq>
     <tcf-cta (clicked)="scrollTo('contact')"></tcf-cta>
     <tcf-footer></tcf-footer>
 
