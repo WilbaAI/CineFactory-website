@@ -1,0 +1,310 @@
+/* =========================================================================
+   The Cine Factory — Design Tokens
+   colors_and_type.css
+
+   Variables for the TCF brand: a pitch-black canvas + a single hot-orange
+   ember + an art-deco serif italic + a condensed display sans.
+
+   Substitution flags (see README.md "Substitution flags"):
+     - Display: Anton  (proxy for unknown condensed display)
+     - Serif italic: Playfair Display  (proxy for art-deco italic)
+     - Body sans: Inter  (proxy for neutral grotesque)
+   ========================================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300..700&display=swap");
+
+:root {
+  /* -----------------------------------------------------------------------
+     COLORS
+     ----------------------------------------------------------------------- */
+
+  /* Brand ember (the hot orange) */
+  --ember-50:  #FFF1E6;
+  --ember-100: #FFD9B8;
+  --ember-200: #FFB47A;
+  --ember-300: #FF8C3F;
+  --ember-400: #FF6B1A;
+  --ember-500: #F2451B;   /* primary brand */
+  --ember-600: #D43712;
+  --ember-700: #A2280A;
+  --ember-800: #6B1A06;
+  --ember-900: #3D0A00;
+
+  /* Cream highlight (the hot center of the radial glow) */
+  --cream-100: #FFF7EC;
+  --cream-200: #FCEEDD;
+  --cream-300: #FFE6C9;
+
+  /* Ink — the black canvas */
+  --ink-900: #000000;   /* the canvas — true black */
+  --ink-800: #0A0807;   /* near-black; tonal lift */
+  --ink-700: #141110;
+  --ink-600: #1F1A18;
+  --ink-500: #2A2421;
+  --ink-400: #3D3633;
+
+  /* Smoke — warm grays for muted text on dark */
+  --smoke-100: #F5EFEA;
+  --smoke-200: #D9D2CC;
+  --smoke-300: #B5ADA6;
+  --smoke-400: #8C857F;
+  --smoke-500: #5F5853;
+  --smoke-600: #3F3A36;
+
+  --white: #FFFFFF;
+  --black: #000000;
+
+  /* Semantic foreground (default scheme is dark) */
+  --fg-1: var(--white);            /* primary text */
+  --fg-2: var(--smoke-200);        /* body text on dark */
+  --fg-3: var(--smoke-400);        /* muted / captions */
+  --fg-accent: var(--ember-500);   /* the ember */
+  --fg-on-ember: var(--white);     /* text on ember surfaces */
+
+  /* Semantic background */
+  --bg-canvas: var(--ink-900);     /* the page */
+  --bg-surface: var(--ink-800);    /* card / panel surface */
+  --bg-elevated: var(--ink-700);   /* lifted surface */
+  --bg-ember: var(--ember-500);    /* the ember surface */
+  --bg-cream: var(--cream-200);    /* the cream backdrop (rare) */
+
+  /* Borders & lines */
+  --border-hairline: rgba(255, 255, 255, 0.14);
+  --border-strong:   rgba(255, 255, 255, 0.32);
+  --border-ember:    var(--ember-500);
+
+  /* Signature gradients */
+  --glow-ember: radial-gradient(
+    ellipse at 30% 40%,
+    var(--cream-200) 0%,
+    var(--ember-400) 18%,
+    var(--ember-600) 38%,
+    var(--ember-900) 62%,
+    var(--ink-900) 86%
+  );
+
+  --glow-spotlight: radial-gradient(
+    circle at 50% 60%,
+    rgba(242, 69, 27, 0.55) 0%,
+    rgba(242, 69, 27, 0.15) 30%,
+    rgba(0, 0, 0, 0) 70%
+  );
+
+  --grade-warm: linear-gradient(
+    180deg,
+    rgba(242, 69, 27, 0.0) 0%,
+    rgba(242, 69, 27, 0.15) 70%,
+    rgba(61, 10, 0, 0.5) 100%
+  );
+
+  /* -----------------------------------------------------------------------
+     TYPE
+     ----------------------------------------------------------------------- */
+
+  --font-display: "Anton", "Impact", "Oswald", system-ui, sans-serif;
+  --font-serif:   "Playfair Display", "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --font-sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", "Roboto Mono", Menlo, monospace;
+
+  /* Type scale (px, fixed — the brand favors deliberate jumps) */
+  --fs-eyebrow:   12px;
+  --fs-caption:   13px;
+  --fs-body-sm:   14px;
+  --fs-body:      16px;
+  --fs-body-lg:   18px;
+  --fs-lead:      22px;
+  --fs-h4:        28px;
+  --fs-h3:        40px;
+  --fs-h2:        64px;
+  --fs-h1:        96px;
+  --fs-display:   160px;   /* "PORTFOLIO" hero */
+
+  /* Line heights */
+  --lh-display: 0.85;
+  --lh-tight:   0.95;
+  --lh-snug:    1.15;
+  --lh-normal:  1.4;
+  --lh-relaxed: 1.6;
+
+  /* Tracking */
+  --tracking-display: -0.02em;
+  --tracking-tight:   -0.01em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;
+  --tracking-eyebrow: 0.18em;
+
+  /* -----------------------------------------------------------------------
+     SPACING
+     ----------------------------------------------------------------------- */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  /* -----------------------------------------------------------------------
+     RADIUS
+     ----------------------------------------------------------------------- */
+
+  --radius-none: 0;
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-pill: 999px;
+
+  /* -----------------------------------------------------------------------
+     ELEVATION (cinematic — glow, not drop shadow)
+     ----------------------------------------------------------------------- */
+
+  --elev-1: 0 0 0 1px var(--border-hairline);
+  --elev-2: 0 1px 0 0 var(--border-hairline), 0 0 0 1px var(--border-hairline);
+  --elev-glow-sm: 0 0 24px rgba(242, 69, 27, 0.25);
+  --elev-glow-md: 0 0 48px rgba(242, 69, 27, 0.35);
+  --elev-glow-lg: 0 0 96px rgba(242, 69, 27, 0.55), 0 0 24px rgba(242, 69, 27, 0.35);
+
+  /* -----------------------------------------------------------------------
+     MOTION
+     ----------------------------------------------------------------------- */
+
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-fast:   180ms;
+  --duration-medium: 320ms;
+  --duration-slow:   560ms;
+  --duration-reveal: 900ms;
+}
+
+/* =========================================================================
+   SEMANTIC ELEMENT CLASSES
+   Use these utility classes for consistent type application.
+   ========================================================================= */
+
+.tcf-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  color: var(--fg-1);
+}
+
+.tcf-h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--fg-1);
+}
+
+.tcf-h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--fg-1);
+}
+
+.tcf-h3-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-normal);
+  color: var(--fg-1);
+}
+
+.tcf-section-title {
+  /* "Our Mission" style */
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  line-height: 1.0;
+  letter-spacing: var(--tracking-normal);
+  color: var(--fg-1);
+}
+
+.tcf-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
+.tcf-lead-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-1);
+}
+
+.tcf-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+}
+
+.tcf-body-sm {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+}
+
+.tcf-caption {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-normal);
+  color: var(--fg-3);
+}
+
+.tcf-tagline-strip {
+  /* Social Media | Video Production | Digital Marketing */
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--fs-body-sm);
+  letter-spacing: 0.02em;
+  color: var(--fg-1);
+}
+
+/* Stacked italic title device — Our Vision / Our Vision / Our Vision */
+.tcf-stacked-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.9;
+  display: flex;
+  flex-direction: column;
+  gap: 0.04em;
+}
+.tcf-stacked-title > :nth-child(1) { color: rgba(255, 255, 255, 0.12); }
+.tcf-stacked-title > :nth-child(2) { color: rgba(255, 255, 255, 0.32); }
+.tcf-stacked-title > :nth-child(3) { color: rgba(255, 255, 255, 1);    }
