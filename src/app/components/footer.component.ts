@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     <footer class="tcf-footer">
       <div class="tcf-footer__grid">
         <div class="tcf-footer__brand">
-          <img src="assets/logo-lockup-dark.png" alt="The Cine Factory" />
+          <img src="assets/logo-full.png" alt="The Cine Factory" width="454" height="176" />
           <p>
             A creative marketing and media production company. We help brands stand out, grow
             faster, and connect deeply through cinematic storytelling.

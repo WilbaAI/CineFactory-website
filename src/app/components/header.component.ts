@@ -14,7 +14,7 @@ interface NavLink {
   template: `
     <header class="tcf-nav">
       <a class="tcf-nav__logo" href="#" (click)="onClick($event, 'home')">
-        <img src="assets/logo-lockup-dark.png" alt="The Cine Factory" />
+        <img src="assets/logo-full.png" alt="The Cine Factory" width="454" height="176" />
       </a>
       <nav class="tcf-nav__links">
         @for (link of links; track link.id) {
