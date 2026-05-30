@@ -1,11 +1,14 @@
 {
   "name": "cinefactory",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "lint": "ng lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "private": true,
   "dependencies": {
@@ -25,6 +28,10 @@
     "@angular-devkit/build-angular": "^17.3.0",
     "@angular/cli": "^17.3.0",
     "@angular/compiler-cli": "^17.3.0",
-    "typescript": "~5.4.0"
+    "angular-eslint": "21.0.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.8.3",
+    "typescript": "~5.4.0",
+    "typescript-eslint": "8.46.4"
   }
 }

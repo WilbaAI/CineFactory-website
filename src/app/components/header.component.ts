@@ -23,7 +23,8 @@ interface NavLink {
             [class.is-active]="active === link.id"
             [href]="'#' + link.id"
             (click)="onClick($event, link.id)"
-          >{{ link.label }}</a>
+            >{{ link.label }}</a
+          >
         }
       </nav>
       <a href="#contact" class="tcf-btn tcf-btn--primary" (click)="onClick($event, 'contact')">
@@ -33,14 +34,14 @@ interface NavLink {
   `,
 })
 export class HeaderComponent {
-  @Input() active: string = 'home';
+  @Input() active = 'home';
   @Output() navigate = new EventEmitter<string>();
 
   readonly links: NavLink[] = [
     { id: 'home', label: 'Home' },
-    { id: 'work', label: 'Our Work' },
-    { id: 'services', label: 'Services' },
     { id: 'about', label: 'About' },
+    { id: 'services', label: 'Services' },
+    { id: 'work', label: 'Our Work' },
     { id: 'contact', label: 'Contact' },
   ];
 

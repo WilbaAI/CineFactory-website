@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RevealDirective } from '../reveal.directive';
 
 interface Service {
   num: string;
@@ -10,28 +11,34 @@ interface Service {
 @Component({
   selector: 'tcf-services',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="tcf-section" id="services">
       <div class="tcf-section__inner">
-        <div class="tcf-eyebrow-tag">— What we specialize in</div>
-        <div class="tcf-stacked">
-          <div>Services</div>
-          <div>Services</div>
-          <div>Services</div>
+        <div class="tcf-section__head" [tcfReveal]="0">
+          <div class="tcf-eyebrow-tag">What we specialize in</div>
+          <h2 class="tcf-section__title">Services</h2>
         </div>
 
         <div class="tcf-services">
           @for (s of services; track s.num) {
-            <article class="tcf-service">
+            <article class="tcf-service" [tcfReveal]="$index">
               <div>
                 <div class="tcf-service__num">{{ s.num }}</div>
                 <h3 class="tcf-service__title">{{ s.title }}</h3>
                 <p class="tcf-service__desc">{{ s.desc }}</p>
               </div>
               <div class="tcf-service__arrow">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
                   <path d="M7 17 17 7M9 7h8v8" />
                 </svg>
               </div>

@@ -10,8 +10,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         <div class="tcf-footer__brand">
           <img src="assets/logo-lockup-dark.png" alt="The Cine Factory" />
           <p>
-            A creative marketing and media production company. We help brands stand out,
-            grow faster, and connect deeply through cinematic storytelling.
+            A creative marketing and media production company. We help brands stand out, grow
+            faster, and connect deeply through cinematic storytelling.
           </p>
         </div>
         <div>
@@ -45,14 +45,20 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       <div class="tcf-footer__bottom">
         <div>© {{ year }} The Cine Factory. All rights reserved.</div>
         <div class="tcf-tagline-strip">
-          Social Media <span class="pipe">|</span>
-          Video Production <span class="pipe">|</span>
+          Social Media <span class="pipe">|</span> Video Production <span class="pipe">|</span>
           Digital Marketing
         </div>
       </div>
     </footer>
   `,
-  styles: [`.pipe { opacity: 0.35; margin: 0 8px; }`],
+  styles: [
+    `
+      .pipe {
+        opacity: 0.35;
+        margin: 0 8px;
+      }
+    `,
+  ],
 })
 export class FooterComponent {
   readonly year = new Date().getFullYear();

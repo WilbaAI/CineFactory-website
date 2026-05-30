@@ -18,10 +18,7 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/assets"],
-            "styles": [
-              "src/colors_and_type.css",
-              "src/styles.scss"
-            ]
+            "styles": ["src/colors_and_type.css", "src/styles.scss"]
           }
         },
         "serve": {
@@ -29,8 +26,17 @@
           "options": {
             "buildTarget": "cinefactory:build"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": ["angular-eslint"]
   }
 }

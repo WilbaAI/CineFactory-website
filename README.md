@@ -1,36 +1,47 @@
-# Cine Factory — Angular UI Kit
+# The Cine Factory — Website
 
-Angular 17+ port of the marketing site. Standalone components, signals, OnPush change detection. **This folder is a complete Angular workspace** — `npm install && ng serve` and you're running.
+Marketing site for The Cine Factory. Angular 17 standalone components, signals,
+OnPush change detection. A self-contained Angular workspace — `npm install && npm start`
+and you're running.
 
 ## Run it
 
 ```bash
-cd ui_kits/website-angular
 npm install
 npm start
 ```
 
 Then open http://localhost:4200.
 
+## Scripts
+
+| Command                | What it does                              |
+| ---------------------- | ----------------------------------------- |
+| `npm start`            | Dev server (`ng serve`) on :4200          |
+| `npm run build`        | Production build to `dist/cinefactory`    |
+| `npm run lint`         | ESLint (angular-eslint, incl. a11y rules) |
+| `npm run format`       | Prettier write across the repo            |
+| `npm run format:check` | Prettier check (CI-friendly)              |
+
 ## Structure
 
 ```
-ui_kits/website-angular/
+.
 ├── package.json
 ├── angular.json
-├── tsconfig.json
-├── tsconfig.app.json
+├── eslint.config.js            # angular-eslint flat config
+├── .prettierrc.json
 └── src/
-    ├── colors_and_type.css      # design tokens (copied from project root)
-    ├── styles.scss              # global .tcf-* component styles
-    ├── index.html               # bootstraps <app-root>
-    ├── main.ts                  # bootstrapApplication entry
+    ├── colors_and_type.css     # design tokens (colors, type, spacing, motion)
+    ├── styles.scss             # global .tcf-* component styles
+    ├── index.html              # bootstraps <app-root>, loads fonts + SEO meta
+    ├── main.ts                 # bootstrapApplication entry
     ├── assets/
     │   ├── logo-lockup-dark.png
     │   ├── logo-mark.png
-    │   └── portfolio/           # all 8 brand pages, used as imagery
+    │   └── portfolio/          # webp imagery used by mission/vision + works
     └── app/
-        ├── app.component.ts     # root — composes sections, owns scroll/modal state
+        ├── app.component.ts    # root — composes sections, scroll spy, work modal
         └── components/
             ├── header.component.ts        # <tcf-header>
             ├── hero.component.ts          # <tcf-hero>
@@ -42,32 +53,37 @@ ui_kits/website-angular/
             └── footer.component.ts        # <tcf-footer>
 ```
 
-## Angular-isms preserved
+## Design system
+
+Dark canvas, single vivid red accent, modern sans typography.
+
+- **Display:** Space Grotesk (geometric grotesque) — headings, hero, section titles.
+- **Body:** Inter — nav, cards, copy, eyebrows.
+- **Accent:** `--ember-500` (`#E5342A`). Change it in `colors_and_type.css` and the
+  whole site re-tints. Translucent red tints (`--tint-ember-*`) drive pills, banners, hovers.
+- Fonts load via `<link>` + `preconnect` in `index.html` (not CSS `@import`) for faster paint.
+
+## Angular-isms
 
 - **Standalone components**, no NgModule.
 - **`ChangeDetectionStrategy.OnPush`** everywhere.
-- **Signals** (`signal<T>()`) for state in `AppComponent` (active section, work modal).
-- **New control flow** (`@if`, `@for` with `track`) — requires Angular 17+.
-- **`@Input` / `@Output`** for parent-child communication; no global state, no services needed.
-- Element selectors prefixed `tcf-` (configured in `angular.json` `prefix`).
+- **Signals** for state in `AppComponent` (active section, work modal).
+- **New control flow** (`@if`, `@for` with `track`) — Angular 17+.
+- **`@Input` / `@Output`** for parent-child; no global state or services.
+- Element selectors prefixed `tcf-` (root stays `app-root`).
 
-## Behaviors preserved
+## Accessibility & performance notes
 
-- Smooth-scroll anchor nav with active-section underline (`scrollTo()` + `@HostListener('window:scroll')`).
-- Sticky nav with backdrop-blur.
-- Service cards: hover-lifted ember radial glow (pure CSS).
-- Work cards: image-scale-on-hover + ember play-button reveal.
-- Click work card → opens an overlay modal (no Angular Material dep; swap in CDK Overlay or MatDialog when productionizing).
-- Endless tagline marquee (pure CSS animation).
+- Section titles are real `<h2>`s; one `<h1>` in the hero. Decorative SVGs are `aria-hidden`.
+- Work cards are native `<button>`s — keyboard-focusable and operable.
+- The work modal is a `role="dialog"` with `aria-modal`, Escape-to-close, a Tab focus
+  trap, and focus restore on close. (For heavier needs, swap in `@angular/cdk/overlay`.)
+- Active-section nav tracking uses `IntersectionObserver` (no per-frame scroll work).
+- `prefers-reduced-motion` is respected — animations and smooth-scroll are disabled.
+- Portfolio imagery is `webp`, lazy-loaded with intrinsic `width`/`height` to avoid layout shift.
 
-## Customization
+## Not yet wired
 
-- **Brand tokens** live in `src/colors_and_type.css`. Change `--ember-500` and the whole site shifts.
-- **Component styles** live in `src/styles.scss` (the `.tcf-*` classes). Same source as the JSX version.
-- **Component logic** is per-file in `src/app/components/*.component.ts` — find-and-edit just the surface you need.
-
-## Notes
-
-- Strict mode + strict templates are on (`tsconfig.json`). All inputs are typed.
-- The work modal uses a plain `<div>` overlay. For production, swap to `@angular/cdk/overlay` or `@angular/material/dialog` for accessibility (focus trap, escape-to-close, ARIA).
-- No router yet — the site is a single scrolling page. Add `@angular/router` if you split routes (services-detail, blog, etc).
+- Social/footer links (`Process`, TikTok, Instagram) are placeholders.
+- No router — single scrolling page. Add `@angular/router` to split routes.
+- The work modal shows a preview stub, not a real case-study player.
