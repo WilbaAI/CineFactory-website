@@ -24,6 +24,7 @@ interface WorkItem {
   image?: string;
   url?: string;
   videoId?: string;
+  client?: string; // overrides the rail label on the card (for mixed rails)
 }
 
 interface WorkGroup {
@@ -74,13 +75,15 @@ interface WorkGroup {
                     class="tcf-reel"
                     (click)="
                       selectWork.emit({
-                        client: group.client,
+                        client: item.client ?? group.client,
                         title: item.title,
                         url: item.url,
                         videoId: item.videoId,
                       })
                     "
-                    [attr.aria-label]="'View ' + item.title + ' for ' + group.client"
+                    [attr.aria-label]="
+                      'View ' + item.title + ' for ' + (item.client ?? group.client)
+                    "
                   >
                     <span
                       class="tcf-reel__bg"
@@ -101,7 +104,7 @@ interface WorkGroup {
                       </span>
                     </span>
                     <span class="tcf-reel__meta">
-                      <span class="tcf-reel__client">{{ group.client }}</span>
+                      <span class="tcf-reel__client">{{ item.client ?? group.client }}</span>
                       <span class="tcf-reel__title">{{ item.title }}</span>
                     </span>
                   </button>
@@ -160,20 +163,17 @@ export class WorksComponent implements AfterViewInit, OnDestroy {
   // `image` on each item to swap the placeholder for the actual frame.
   readonly groups: WorkGroup[] = [
     {
-      client: 'Avatar Band SL — Bus',
+      client: 'Bus & Vehicle Branding',
       items: [
         {
+          client: 'Avatar Band SL — Bus',
           title: 'Avatar Band SL branding',
           videoId: '7622921197524733200',
           url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7622921197524733200',
           image: 'assets/works/avatar-band/7622921197524733200.webp',
         },
-      ],
-    },
-    {
-      client: 'Edirisinghe Cushion Works',
-      items: [
         {
+          client: 'Edirisinghe Cushion Works',
           title: 'Avatar Band — the makeover',
           videoId: '7624500400682454292',
           url: 'https://www.tiktok.com/@edirisinghacushionworks/video/7624500400682454292',
@@ -273,17 +273,6 @@ export class WorksComponent implements AfterViewInit, OnDestroy {
           url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7636036511401577729',
           image: 'assets/works/anura/7636036511401577729.webp',
         },
-      ],
-    },
-    {
-      client: 'Imperial College',
-      items: [
-        { title: 'Imperial College' },
-        { title: 'Sustainable businesses' },
-        { title: 'International Business & Finance' },
-        { title: 'Build my future' },
-        { title: 'One of the best decisions' },
-        { title: 'Morning & night practices' },
       ],
     },
   ];
