@@ -15,11 +15,20 @@ export interface Work {
   client: string;
   title: string;
   image?: string;
+  url?: string;
+  videoId?: string;
+}
+
+interface WorkItem {
+  title: string;
+  image?: string;
+  url?: string;
+  videoId?: string;
 }
 
 interface WorkGroup {
   client: string;
-  items: { title: string; image?: string }[];
+  items: WorkItem[];
 }
 
 @Component({
@@ -63,7 +72,14 @@ interface WorkGroup {
                   <button
                     type="button"
                     class="tcf-reel"
-                    (click)="selectWork.emit({ client: group.client, title: item.title })"
+                    (click)="
+                      selectWork.emit({
+                        client: group.client,
+                        title: item.title,
+                        url: item.url,
+                        videoId: item.videoId,
+                      })
+                    "
                     [attr.aria-label]="'View ' + item.title + ' for ' + group.client"
                   >
                     <span
@@ -146,33 +162,117 @@ export class WorksComponent implements AfterViewInit, OnDestroy {
     {
       client: 'Avatar Band SL — Bus',
       items: [
-        { title: 'Avatar movie theme bus' },
-        { title: 'The transformation' },
-        { title: 'Music band bus' },
+        {
+          title: 'Avatar Band SL branding',
+          videoId: '7622921197524733200',
+          url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7622921197524733200',
+          image: 'assets/works/avatar-band/7622921197524733200.webp',
+        },
       ],
     },
     {
       client: 'Edirisinghe Cushion Works',
       items: [
-        { title: 'Interior modification' },
-        { title: 'Next-level seats' },
-        { title: 'Best-in-class finish' },
+        {
+          title: 'Avatar Band — the makeover',
+          videoId: '7624500400682454292',
+          url: 'https://www.tiktok.com/@edirisinghacushionworks/video/7624500400682454292',
+          image: 'assets/works/edirisinghe/7624500400682454292.webp',
+        },
       ],
     },
     {
       client: 'Heshan de Silva — Personal Content',
       items: [
-        { title: 'Trust your work' },
-        { title: 'Heshan de Silva' },
-        { title: 'Hear this out' },
+        {
+          title: 'තමන්ව විශ්වාස කරන්න!',
+          videoId: '7640818599820659969',
+          url: 'https://www.tiktok.com/@heshan_de_silva01/video/7640818599820659969',
+          image: 'assets/works/heshan/7640818599820659969.webp',
+        },
+        {
+          title: 'Branding නියාමනය කළොත්…',
+          videoId: '7641958552478715152',
+          url: 'https://www.tiktok.com/@heshan_de_silva01/video/7641958552478715152',
+          image: 'assets/works/heshan/7641958552478715152.webp',
+        },
+        {
+          title: 'දැනගෙන ඇසුරු කරන්න!',
+          videoId: '7643077290691153153',
+          url: 'https://www.tiktok.com/@heshan_de_silva01/video/7643077290691153153',
+          image: 'assets/works/heshan/7643077290691153153.webp',
+        },
+        {
+          title: 'ධෛර්යය ඇතුව වැඩ කරන්න.',
+          videoId: '7620487660741659920',
+          url: 'https://www.tiktok.com/@heshan_de_silva01/video/7620487660741659920',
+          image: 'assets/works/heshan/7620487660741659920.webp',
+        },
+        {
+          title: 'තමන්ව විශ්වාස කරන්න.',
+          videoId: '7616272864802557200',
+          url: 'https://www.tiktok.com/@heshan_de_silva01/video/7616272864802557200',
+          image: 'assets/works/heshan/7616272864802557200.webp',
+        },
+        {
+          title: 'අනුන්ගේ දියුණුවට සතුටු වෙන්න',
+          videoId: '7614529327559871760',
+          url: 'https://www.tiktok.com/@heshan_de_silva01/video/7614529327559871760',
+          image: 'assets/works/heshan/7614529327559871760.webp',
+        },
+        {
+          title: 'පරාද වෙන්න පුරුදු වෙන්න',
+          videoId: '7610648006739660033',
+          url: 'https://www.tiktok.com/@heshan_de_silva01/video/7610648006739660033',
+          image: 'assets/works/heshan/7610648006739660033.webp',
+        },
       ],
     },
     {
       client: 'Anura Advertising',
       items: [
-        { title: 'Sakeed — Reflect' },
-        { title: 'Tiger bus wrap' },
-        { title: 'NR Super Service' },
+        {
+          title: 'NR Super Service & Luxury Edition',
+          videoId: '7638225630567370001',
+          url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7638225630567370001',
+          image: 'assets/works/anura/7638225630567370001.webp',
+        },
+        {
+          title: 'ඔයාගේ business එකේත් Brand Value එක වැඩි කරමු!',
+          videoId: '7644789948570176784',
+          url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7644789948570176784',
+          image: 'assets/works/anura/7644789948570176784.webp',
+        },
+        {
+          title: 'Jeyabal Travels',
+          videoId: '7635280138158050561',
+          url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7635280138158050561',
+          image: 'assets/works/anura/7635280138158050561.webp',
+        },
+        {
+          title: 'සුභ වෙසක් මංගල්‍යයක් වේවා 🪔',
+          videoId: '7645390704717335809',
+          url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7645390704717335809',
+          image: 'assets/works/anura/7645390704717335809.webp',
+        },
+        {
+          title: 'Janaka Express',
+          videoId: '7639598783642275088',
+          url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7639598783642275088',
+          image: 'assets/works/anura/7639598783642275088.webp',
+        },
+        {
+          title: 'Millennials ලගෙන් GenZ පරපුරට — 26 වසරක විශ්වාසය',
+          videoId: '7638896408325557505',
+          url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7638896408325557505',
+          image: 'assets/works/anura/7638896408325557505.webp',
+        },
+        {
+          title: 'Rathna Travels & Tours',
+          videoId: '7636036511401577729',
+          url: 'https://www.tiktok.com/@anuraadvertising.pvt.ltd/video/7636036511401577729',
+          image: 'assets/works/anura/7636036511401577729.webp',
+        },
       ],
     },
     {

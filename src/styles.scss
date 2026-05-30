@@ -571,7 +571,10 @@ button {
   margin-bottom: 4px;
 }
 .tcf-reel__title {
-  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 15px;

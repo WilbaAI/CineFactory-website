@@ -4,9 +4,11 @@ import {
   Component,
   HostListener,
   OnDestroy,
+  inject,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HeaderComponent } from './components/header.component';
 import { HeroComponent } from './components/hero.component';
 import { MarqueeComponent } from './components/marquee.component';
@@ -59,12 +61,36 @@ import { FooterComponent } from './components/footer.component';
         >
           <div class="tcf-eyebrow-tag">{{ work.client }}</div>
           <h3 class="tcf-modal__title" id="tcf-modal-title">{{ work.title }}</h3>
-          <p class="tcf-modal__body">
-            Full case study preview — film would open here in production.
-          </p>
-          <button class="tcf-btn tcf-btn--primary tcf-modal__close" (click)="closeModal()">
-            Close
-          </button>
+
+          @if (embedUrl(); as src) {
+            <div class="tcf-modal__player">
+              <iframe
+                [src]="src"
+                title="TikTok video"
+                allow="autoplay; encrypted-media; fullscreen"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          } @else {
+            <p class="tcf-modal__body">Reel coming soon — added shortly.</p>
+          }
+
+          <div class="tcf-modal__foot">
+            @if (work.url) {
+              <a
+                class="tcf-btn tcf-btn--ghost"
+                [href]="work.url"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open on TikTok ↗
+              </a>
+            }
+            <button class="tcf-btn tcf-btn--primary tcf-modal__close" (click)="closeModal()">
+              Close
+            </button>
+          </div>
         </div>
       </div>
     }
@@ -89,8 +115,8 @@ import { FooterComponent } from './components/footer.component';
         background: var(--bg-surface);
         border: 1px solid var(--tint-ember-30);
         border-radius: var(--radius-xl);
-        padding: 40px;
-        max-width: 520px;
+        padding: 24px;
+        max-width: 380px;
         width: 100%;
         text-align: center;
         box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
@@ -98,16 +124,37 @@ import { FooterComponent } from './components/footer.component';
       .tcf-modal__title {
         font-family: var(--font-display);
         font-weight: 700;
-        font-size: 34px;
-        letter-spacing: -0.02em;
-        margin: 8px 0 20px;
+        font-size: 20px;
+        letter-spacing: -0.01em;
+        margin: 4px 0 16px;
         color: var(--white);
+      }
+      .tcf-modal__player {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        max-height: 70vh;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        background: #000;
+      }
+      .tcf-modal__player iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
       }
       .tcf-modal__body {
         color: var(--smoke-300);
         font-size: 15px;
         line-height: 1.6;
-        margin-bottom: 28px;
+      }
+      .tcf-modal__foot {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 18px;
       }
     `,
   ],
@@ -115,7 +162,9 @@ import { FooterComponent } from './components/footer.component';
 export class AppComponent implements AfterViewInit, OnDestroy {
   active = signal<string>('home');
   modalWork = signal<Work | null>(null);
+  embedUrl = signal<SafeResourceUrl | null>(null);
 
+  private readonly sanitizer = inject(DomSanitizer);
   private readonly sections = ['home', 'about', 'services', 'work', 'contact'];
   private observer?: IntersectionObserver;
   private lastFocused: HTMLElement | null = null;
@@ -153,6 +202,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   openModal(work: Work): void {
     this.lastFocused = document.activeElement as HTMLElement | null;
+    this.embedUrl.set(
+      work.videoId
+        ? this.sanitizer.bypassSecurityTrustResourceUrl(
+            `https://www.tiktok.com/embed/v2/${work.videoId}`,
+          )
+        : null,
+    );
     this.modalWork.set(work);
     // Defer focus until the dialog is in the DOM.
     setTimeout(() => {
@@ -162,6 +218,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   closeModal(): void {
     this.modalWork.set(null);
+    this.embedUrl.set(null);
     this.lastFocused?.focus();
     this.lastFocused = null;
   }
