@@ -684,7 +684,7 @@ button {
 
 /* ---------- FOOTER ---------- */
 .tcf-footer {
-  background: var(--ink-900);
+  background: #000;
   border-top: 1px solid var(--border-hairline);
   padding: 80px 40px 40px;
 }
@@ -696,7 +696,8 @@ button {
   gap: 56px;
 }
 .tcf-footer__brand img {
-  height: 40px;
+  height: 44px;
+  width: auto;
 }
 .tcf-footer__brand p {
   margin-top: 18px;
